@@ -1,3 +1,5 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/semi */
 /* eslint-disable arrow-body-style */
@@ -17,8 +19,8 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 })
 
 export class DbService {
-  moviesList = new BehaviorSubject([]);
   private storage: SQLiteObject;
+  moviesList = new BehaviorSubject([]);
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(
     private platform: Platform,
@@ -30,13 +32,12 @@ export class DbService {
       this.sqlite.create({
         name: 'cinemarg_db.db',
         location: 'default'
-      })
-      .then((db: SQLiteObject) => {
+      }).then((db: SQLiteObject) => {
           this.storage = db;
           this.getFakeData();
       });
     });
-  }
+  };
   dbState() {
     return this.isDbReady.asObservable();
   }
@@ -79,7 +80,7 @@ export class DbService {
   // Add
   addMovie(title, movieDesc, yearReleased, genre) {
     let data = [title, movieDesc, yearReleased, genre];
-    return this.storage.executeSql('INSERT INTO movies (artist_name, song_name, year_released, genre) VALUES (?, ?, ?, ?)', data)
+    return this.storage.executeSql('INSERT INTO movies (title, movie_desc, year_released, genre) VALUES (?, ?, ?, ?)', data)
     .then(res => {
       this.getMovies();
     });
@@ -100,7 +101,7 @@ export class DbService {
   // Update
   updateMovie(id, movie: Movies) {
     let data = [movie.title, movie.movieDesc, movie.yearReleased, movie.genre];
-    return this.storage.executeSql(`UPDATE movies SET artist_name = ?, song_name = ? WHERE id = ${id}`, data)
+    return this.storage.executeSql(`UPDATE movies SET title = ?, movie_desc = ?, year_released = ?, genre = ? WHERE id = ${id}`, data)
     .then( data => {
       this.getMovies();
     })
@@ -113,3 +114,7 @@ export class DbService {
     });
   }
 }
+function then(arg0: (db: SQLiteObject) => void) {
+  throw new Error('Function not implemented.');
+}
+

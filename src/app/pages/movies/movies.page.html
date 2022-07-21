@@ -6,23 +6,32 @@
     <ion-title>Edit Song</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content fullscreen="true">
   <ion-list lines="full">
     <form [formGroup]="editForm" (ngSubmit)="saveForm()">
       <ion-item>
-        <ion-label position="floating">Artist name</ion-label>
-        <ion-input formControlName="artist_name" type="text" required></ion-input>
+        <ion-label position="floating">Titulo</ion-label>
+        <ion-input formControlName="title" type="text" required></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Song name</ion-label>
-        <ion-input formControlName="song_name" type="text" required>
+        <ion-label position="floating">Descripcion</ion-label>
+        <ion-input formControlName="movieDesc" type="text" required>
         </ion-input>
       </ion-item>
-   
+      <ion-item>
+        <ion-label position="floating">Año</ion-label>
+        <ion-input formControlName="yearReleased" type="text" required>
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Genero</ion-label>
+        <ion-input formControlName="genre" type="text" required>
+        </ion-input>
+      </ion-item>
       <ion-row>
         <ion-col>
           <ion-button type="submit" color="primary" shape="full" expand="block">
-            Update
+            Actualizar
           </ion-button>
         </ion-col>
       </ion-row>
