@@ -1,7 +1,8 @@
 {
   "name": "cinema",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }
