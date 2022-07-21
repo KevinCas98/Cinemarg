@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from "@angular/forms";
-import { DbService } from '../../../services/db.service'
-import { ActivatedRoute, Router } from "@angular/router";
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { DbService } from '../../../services/db.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-movies',
@@ -18,24 +19,28 @@ export class MoviesPage implements OnInit {
     private actRoute: ActivatedRoute
   ) {
     this.id = this.actRoute.snapshot.paramMap.get('id');
-    this.db.getSong(this.id).then(res => {
+    this.db.getMovies().then(res => {
       this.editForm.setValue({
-        artist_name: res['artist_name'],
-        song_name: res['song_name']
-      })
-    })
+        title: res['title'],
+        movieDesc: res['movie_desc'],
+        yearReleased: res['year_released'],
+        genre: res['genre']
+      });
+    });
   }
   ngOnInit() {
     this.editForm = this.formBuilder.group({
-      artist_name: [''],
-      song_name: ['']
-    })
+      title: [''],
+      movieDesc: [''],
+      yearReleased: [''],
+      genre: ['']
+    });
   }
   saveForm(){
-    this.db.updateSong(this.id, this.editForm.value)
+    this.db.updateMovie(this.id, this.editForm.value)
     .then( (res) => {
-      console.log(res)
+      console.log(res);
       this.router.navigate(['/main']);
-    })
+    });
   }
 }

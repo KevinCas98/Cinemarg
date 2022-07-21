@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/semi */
+/* eslint-disable arrow-body-style */
+/* eslint-disable no-var */
+/* eslint-disable prefer-const */
 
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { Song } from './song';
+import { Movies } from './movies';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
@@ -12,12 +17,12 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 })
 
 export class DbService {
+  moviesList = new BehaviorSubject([]);
   private storage: SQLiteObject;
-  songsList = new BehaviorSubject([]);
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(
-    private platform: Platform, 
-    private sqlite: SQLite, 
+    private platform: Platform,
+    private sqlite: SQLite,
     private httpClient: HttpClient,
     private sqlPorter: SQLitePorter,
   ) {
@@ -35,72 +40,76 @@ export class DbService {
   dbState() {
     return this.isDbReady.asObservable();
   }
- 
-  fetchSongs(): Observable<Song[]> {
-    return this.songsList.asObservable();
+
+  fetchMovies(): Observable<Movies[]> {
+    return this.moviesList.asObservable();
   }
     // Render fake data
     getFakeData() {
       this.httpClient.get(
-        'assets/dump.sql', 
+        'assets/dump.sql',
         {responseType: 'text'}
       ).subscribe(data => {
         this.sqlPorter.importSqlToDb(this.storage, data)
           .then(_ => {
-            this.getSongs();
+            this.getMovies();
             this.isDbReady.next(true);
           })
           .catch(error => console.error(error));
       });
     }
   // Get list
-  getSongs(){
-    return this.storage.executeSql('SELECT * FROM songtable', []).then(res => {
-      let items: Song[] = [];
+  getMovies(){
+    return this.storage.executeSql('SELECT * FROM movies', []).then(res => {
+      let items: Movies[] = [];
       if (res.rows.length > 0) {
-        for (var i = 0; i < res.rows.length; i++) { 
-          items.push({ 
+        for (var i = 0; i < res.rows.length; i++) {
+          items.push({
             id: res.rows.item(i).id,
-            artist_name: res.rows.item(i).artist_name,  
-            song_name: res.rows.item(i).song_name
+            title: res.rows.item(i).title,
+            movieDesc: res.rows.item(i).movie_desc,
+            yearReleased: res.rows.item(i).year_released,
+            genre: res.rows.item(i).genre,
            });
         }
       }
-      this.songsList.next(items);
+      this.moviesList.next(items);
     });
   }
   // Add
-  addSong(artist_name, song_name) {
-    let data = [artist_name, song_name];
-    return this.storage.executeSql('INSERT INTO songtable (artist_name, song_name) VALUES (?, ?)', data)
+  addMovie(title, movieDesc, yearReleased, genre) {
+    let data = [title, movieDesc, yearReleased, genre];
+    return this.storage.executeSql('INSERT INTO movies (artist_name, song_name, year_released, genre) VALUES (?, ?, ?, ?)', data)
     .then(res => {
-      this.getSongs();
+      this.getMovies();
     });
   }
- 
+
   // Get single object
-  getSong(id): Promise<Song> {
-    return this.storage.executeSql('SELECT * FROM songtable WHERE id = ?', [id]).then(res => { 
+  getMovie(id): Promise<Movies> {
+    return this.storage.executeSql('SELECT * FROM movies WHERE id = ?', [id]).then(res => {
       return {
         id: res.rows.item(0).id,
-        artist_name: res.rows.item(0).artist_name,  
-        song_name: res.rows.item(0).song_name
+        title: res.rows.item(0).title,
+        movieDesc: res.rows.item(0).movie_desc,
+        yearReleased: res.rows.item(0).year_released,
+        genre: res.rows.item(0).genre
       }
     });
   }
   // Update
-  updateSong(id, song: Song) {
-    let data = [song.artist_name, song.song_name];
-    return this.storage.executeSql(`UPDATE songtable SET artist_name = ?, song_name = ? WHERE id = ${id}`, data)
-    .then(data => {
-      this.getSongs();
+  updateMovie(id, movie: Movies) {
+    let data = [movie.title, movie.movieDesc, movie.yearReleased, movie.genre];
+    return this.storage.executeSql(`UPDATE movies SET artist_name = ?, song_name = ? WHERE id = ${id}`, data)
+    .then( data => {
+      this.getMovies();
     })
   }
   // Delete
-  deleteSong(id) {
-    return this.storage.executeSql('DELETE FROM songtable WHERE id = ?', [id])
+  deleteMovie(id) {
+    return this.storage.executeSql('DELETE FROM movies WHERE id = ?', [id])
     .then(_ => {
-      this.getSongs();
+      this.getMovies();
     });
   }
 }
