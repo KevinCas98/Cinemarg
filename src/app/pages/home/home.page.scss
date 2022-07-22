@@ -1,0 +1,21 @@
+.title {
+  --color: aquamarine;
+  --background: none;
+}
+
+.form {
+margin-top: 3rem;
+  .inputs {
+    --border-radius: 25px;
+    --background: rgba(52, 49, 49, 0.419);
+    margin: 1rem;
+  }
+}
+
+.buttons {
+  padding: 0rem 4rem 0rem 4rem;
+}
+
+.logo {
+  margin: 1rem auto;
+}

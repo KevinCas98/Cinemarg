@@ -3,31 +3,34 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Registarse</ion-title>
+    <ion-title class="ion-text-center ion-text-uppercase">Registarse</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form>
-    <ion-item lines="full">
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Apellido</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="password" required></ion-input>
-    </ion-item>
-    <ion-row>
-      <ion-col>
-        <ion-button [routerLink]="['/home']" type="submit" color="danger" expand="block">Registrarse</ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+  <div class="form">
+    <form>
+      <ion-item class="inputs" lines="none">
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input type="text" required></ion-input>
+      </ion-item>
+      <ion-item class="inputs" lines="none">
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input type="text" required></ion-input>
+      </ion-item>
+      <ion-item class="inputs" lines="none">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="text" required></ion-input>
+      </ion-item>
+      <ion-item class="inputs" lines="none">
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" required></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button [routerLink]="['/home']" class="buttons" type="submit" color="medium" strong="true" shape="round" expand="block">Registrarse</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+
 </ion-content>

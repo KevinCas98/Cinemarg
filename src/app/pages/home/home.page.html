@@ -1,25 +1,37 @@
 <ion-content class="auth-form">
   <ion-grid>
     <ion-row>
-      <ion-col align-self-center>
-        <form>
-          <ion-item lines="full">
-            <ion-label position="floating">Email</ion-label>
-            <ion-input type="text" required></ion-input>
-          </ion-item>
-          <ion-item lines="full">
-            <ion-label position="floating">Contraseña</ion-label>
-            <ion-input type="password" required></ion-input>
-          </ion-item>
-          <ion-row>
-            <ion-col>
-              <ion-button [routerLink]="['/main']" type="submit" color="primary" expand="block">Iniciar Sesión</ion-button>
-              <a [routerLink]="['/forgot-password']" class="small-text">Olvidaste tu contraseña?</a>
-            </ion-col>
-          </ion-row>
-        </form>
-        <span class="divider line one-line">or</span>
-        <ion-button [routerLink]="['/registration']" expand="block" color="danger">Registarse</ion-button>
+      <ion-col class="ion-text-center">
+        <div class="title ion-text-center ion-text-uppercase" lines="none">
+          <ion-text>
+            <h1>cinemarg</h1>
+          </ion-text>
+            <ion-avatar class="logo">
+              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+            </ion-avatar>
+        </div>
+        <div class="form ion-margin-top">
+          <form>
+            <ion-item class="inputs" lines="none">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="text" required></ion-input>
+            </ion-item>
+            <ion-item class="inputs" lines="none">
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input type="password" required></ion-input>
+            </ion-item>
+            <ion-row>
+              <ion-col class="ion-margin-top ion-text-center">
+                <ion-button [routerLink]="['/main']" type="submit" class="buttons ion-margin-vertical" color="medium" strong="true" shape="round" expand="block">Iniciar Sesión</ion-button>
+                <a [routerLink]="['/forgot-password']" class="small-text ion-margin-vertical">Olvidaste tu contraseña?</a>
+              </ion-col>
+            </ion-row>
+          </form>
+        </div>
+        <div class="ion-text-center ion-margin-vertical">
+          <span class="divider line one-line">or</span>
+          <ion-button [routerLink]="['/registration']" class="buttons ion-margin-top" color="medium" strong="true" shape="round" expand="block">Registarse</ion-button>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
